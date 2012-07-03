@@ -31,7 +31,7 @@ public class Main_PDB_Pmap {
 		String version = "JUNE2012";
 
 		File f = new File(
-				"//Users/julieklein/Dropbox/ProteasiX/ProteasiX/ProteasixVersionJune2012/PMAPJUIN2012_6");
+				"//Users/julieklein/Dropbox/ProteasiX/ProteasiX/ProteasixVersionJune2012/PMAPJUIN2012_5");
 		File[] files = f.listFiles();
 		for (File file : files) {
 			String filepath = "file://" + file.getPath() + "/";
@@ -283,11 +283,13 @@ public class Main_PDB_Pmap {
 		}
 		try {
 			System.out.println("-----------------");
-			csvWriter = new PrintStream("Pmap6notcuratedProteasixDB" + "_"
+			csvWriter = new PrintStream("Pmap5notcuratedProteasixDB" + "_"
 					+ version + ".csv");
 			// populateHeaders(csvWriter);
 			for (CsDatabaseEntry csDatabaseEntry : PmapnotcuratedProteasixDB) {
+				System.out.println(csDatabaseEntry.getExternal_Link());
 				populateData(csvWriter, csDatabaseEntry);
+				System.out.println("OK");
 			}
 
 		} catch (FileNotFoundException ex) {
@@ -409,7 +411,9 @@ public class Main_PDB_Pmap {
 				String splitarray[] = line.split("\t");
 				String naturallanguage = splitarray[1];
 				naturallanguage = naturallanguage.replaceAll("\"", "");
-				if (naturallanguage.equals(Substratename)) {
+				naturallanguage = naturallanguage.replaceAll(",", "");
+				naturallanguage = naturallanguage.replaceAll(";", "");
+				if (naturallanguage.equalsIgnoreCase(Substratename)) {
 					Substratesymbol = splitarray[0];
 					Substratesymbol = Substratesymbol.replaceAll("sept-0",
 							"SEPT");
@@ -669,7 +673,9 @@ public class Main_PDB_Pmap {
 			String splitarray[] = line.split("\t");
 			String naturallanguage = splitarray[0];
 			naturallanguage = naturallanguage.replaceAll("\"", "");
-			if (naturallanguage.equals(proteaseName)) {
+			naturallanguage = naturallanguage.replaceAll(",", "");
+			naturallanguage = naturallanguage.replaceAll(";", "");
+			if (naturallanguage.equalsIgnoreCase(proteaseName)) {
 				String proteaseSymbol = splitarray[1];
 				proteaseSymbol = proteaseSymbol.replaceAll("sept-0", "SEPT");
 				String proteaseUniprot = splitarray[2];
